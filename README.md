@@ -1,3 +1,3 @@
-![Jyve](jyve-logo.png)
+![Jyve](jyve-logo.svg)
 
 # Out-of-the-box Generic Repo on NodeJS
