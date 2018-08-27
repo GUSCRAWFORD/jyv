@@ -1,0 +1,15 @@
+{
+  "name": "@guscrawford.com/jyve",
+  "version": "0.0.0-alpha",
+  "description": "Out-of-the-box Generic Repo for NodeJS",
+  "main": "index.js",
+  "repository": "https://github.com/GUSCRAWFORD/jyve.git",
+  "author": "Gus Crawford <gus.crawford@envisageny.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {},
+  "peerDependencies": {
+    "@types/node": "^10.9.2",
+    "typescript": "^3.0.1"
+  }
+}
