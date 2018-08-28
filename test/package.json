@@ -1,0 +1,10 @@
+{
+  "name": "@guscrawford.com/jyve-test",
+  "version": "0.0.0-alpha",
+  "description": "A test suite designed to abuse Jyve",
+  "main": "index.js",
+  "repository": "https://github.com/GUSCRAWFORD/jyve.git",
+  "author": "Gus",
+  "license": "MIT",
+  "private": false
+}
