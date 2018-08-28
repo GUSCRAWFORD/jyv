@@ -2,14 +2,25 @@
   "name": "@guscrawford.com/jyve-mongo",
   "version": "0.0.0-alpha",
   "description": "Out-of-the-box Generic Repository via mongoclient for NodeJS",
-  "main": "index.js",
+  "main": "./dist/bin/odata-v4-mongodb-generic-repo.js",
+  "types": "./dist/odata-v4-mongodb-generic-repo.d.ts",
   "repository": "https://github.com/GUSCRAWFORD/jyve",
   "author": "Gus",
   "license": "MIT",
   "private": false,
-  "dependencies": {},
-  "peerDependencies": {
+  "scripts": {
+    "preinstall": "echo \"🔄  Removing @guscrawford.com\" && rm -rfv \"node_modules/@guscrawford.com\"",
+    "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && cd ../core && yarn rebuild && mkdir \"../mongo/node_modules/@guscrawford.com\" && mkdir \"../mongo/node_modules/@guscrawford.com/jyve-core\" &&  cp -r dist \"../mongo/node_modules/@guscrawford.com/jyve-core\" && cp package.json \"../mongo/node_modules/@guscrawford.com/jyve-core/package.json\" ",
+
+
+    "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
+    "rebuild":"yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
+  },
+  "devDependencies": {
     "@types/node": "^10.9.2",
     "mongodb": "^3.1.4"
+  },
+  "@package:transform":{
+    "scripts":"@package:remove"
   }
 }
