@@ -14,7 +14,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="Jyve.inkscape.svg">
   <defs
      id="defs2" />
@@ -26,15 +26,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2"
-     inkscape:cx="112.38114"
+     inkscape:cx="274.78917"
      inkscape:cy="917.65027"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1440"
+     inkscape:window-height="787"
+     inkscape:window-x="480"
+     inkscape:window-y="1081"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -53,7 +53,10 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g952">
+       id="g952"
+       inkscape:export-filename="/Users/guscrawford/jyve/test/general-express-app/public/images/jyve-logo.png"
+       inkscape:export-xdpi="129.12059"
+       inkscape:export-ydpi="129.12059">
       <rect
          ry="5.0270834"
          y="14.424444"
