@@ -1,0 +1,23 @@
+{
+  "name": "@guscrawford.com/jyve-core",
+  "version": "0.0.0-alpha",
+  "description": "Out-of-the-box Generic Repo for NodeJS",
+  "main": "./dist/bin/main.js",
+  "types": "./dist/main.d.ts",
+  "repository": "https://github.com/GUSCRAWFORD/jyve.git",
+  "author": "Gus Crawford <gus.crawford@envisageny.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {},
+  "peerDependencies": {
+    "@types/node": "^10.9.2",
+    "typescript": "^2.7.2"
+  },
+  "scripts":{
+    "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
+    "rebuild":"yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
+  },
+  "@package:transform":{
+    "scripts":"@package:remove"
+  }
+}
