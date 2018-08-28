@@ -6,7 +6,7 @@ import {
     HasKey,
     OperationContext,
     ExpressLikeODataQuery
-} from '../odata-v4-generic-repo';
+} from '@guscrawford.com/jyve-core';
 export { ODataV4GenericRepo, ConnectionInfo, APP_CONFIG, OperationContext };
 const DB_CONFIG = APP_CONFIG[process.env.NODE_ENV||'local'].db, DEFAULT_DB_CONFIG = DB_CONFIG[DB_CONFIG.default];
 import { ObjectID, MongoClient, Db } from "mongodb";
