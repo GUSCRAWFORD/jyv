@@ -10,15 +10,17 @@
   "private": false,
   "scripts": {
     "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../core",
-
-    "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "rebuild":"yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
+    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
+    "rebuild": "yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
   },
   "devDependencies": {
     "@types/node": "^10.9.2",
     "mongodb": "^3.1.4"
   },
-  "@package:transform":{
-    "scripts":"@package:remove"
+  "@package:transform": {
+    "scripts": "@package:remove"
+  },
+  "peerDependencies": {
+    "@guscrawford.com/jyve-core": "^0.0.0-alpha"
   }
 }

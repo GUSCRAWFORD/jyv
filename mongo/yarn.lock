@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@guscrawford.com/jyve-core@^0.0.0-alpha":
+  version "0.0.0-alpha"
+  resolved "https://registry.yarnpkg.com/@guscrawford.com/jyve-core/-/jyve-core-0.0.0-alpha.tgz#7fe4269ab66fd006440dd501e83f8969b603acd3"
+
 "@types/node@^10.9.2":
   version "10.9.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.2.tgz#f0ab8dced5cd6c56b26765e1c0d9e4fdcc9f2a00"
