@@ -1,6 +1,6 @@
 {
   "name": "@guscrawford.com/jyve-core",
-  "version": "2.0.1b",
+  "version": "2.0.1c",
   "description": "Out-of-the-box Generic Repo for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",

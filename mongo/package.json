@@ -1,6 +1,6 @@
 {
   "name": "@guscrawford.com/jyve-mongo",
-  "version": "2.0.1b",
+  "version": "2.0.1c",
   "description": "Out-of-the-box Generic Repository via mongoclient for NodeJS",
   "main": "./dist/bin/odata-v4-mongodb-generic-repo.js",
   "types": "./dist/odata-v4-mongodb-generic-repo.d.ts",
