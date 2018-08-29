@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "preinstall": "echo \"🔄  Removing @guscrawford.com\" && rm -rfv \"node_modules/@guscrawford.com\"",
-    "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && cd ../../core && yarn rebuild && mkdir \"../test/express-ts-api/node_modules/@guscrawford.com\" && mkdir \"../test/express-ts-api/node_modules/@guscrawford.com/jyve-core\" &&  cp -r dist \"../test/express-ts-api/node_modules/@guscrawford.com/jyve-core\" && cp package.json \"../test/express-ts-api/node_modules/@guscrawford.com/jyve-core/package.json\" && echo \"✅  Replacing @guscrawford.com/jyve-mongo\" && cd ../mongo && yarn install && yarn rebuild && mkdir \"../test/express-ts-api/node_modules/@guscrawford.com/jyve-mongo\" &&  cp -r dist \"../test/express-ts-api/node_modules/@guscrawford.com/jyve-mongo\" && cp package.json \"../test/express-ts-api/node_modules/@guscrawford.com/jyve-mongo/package.json\" "
+    "dev:core":"echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../../core",
+    "dev:mongo":"echo \"✅  Replacing @guscrawford.com/jyve-mongo\" && fpm install ../../mongo",
+    "postinstall":"yarn dev:core && yarn dev:mongo"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

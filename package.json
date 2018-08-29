@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@guscrawford.com/fpm": "^0.0.3",
     "pm2": "^3.0.4"
   },
   "scripts": {
@@ -16,7 +17,5 @@
     "pm2:mongod": "pm2 start --name \"mongod\" npm -- run mongod",
     "general-express-app": "pm2 start test/general-express-app"
   },
-  "dependencies": {
-    "caporal": "^0.10.0"
-  }
+  "dependencies": {}
 }

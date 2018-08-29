@@ -9,9 +9,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "preinstall": "echo \"🔄  Removing @guscrawford.com\" && rm -rfv \"node_modules/@guscrawford.com\"",
-    "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && cd ../core && yarn rebuild && mkdir \"../mongo/node_modules/@guscrawford.com\" && mkdir \"../mongo/node_modules/@guscrawford.com/jyve-core\" &&  cp -r dist \"../mongo/node_modules/@guscrawford.com/jyve-core\" && cp package.json \"../mongo/node_modules/@guscrawford.com/jyve-core/package.json\" ",
-
+    "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../core",
 
     "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
     "rebuild":"yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
