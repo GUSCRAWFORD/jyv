@@ -1,6 +1,6 @@
 {
   "name": "@guscrawford.com/jyve-mongo",
-  "version": "2.0.1",
+  "version": "2.0.1b",
   "description": "Out-of-the-box Generic Repository via mongoclient for NodeJS",
   "main": "./dist/bin/odata-v4-mongodb-generic-repo.js",
   "types": "./dist/odata-v4-mongodb-generic-repo.d.ts",
@@ -18,9 +18,19 @@
     "mongodb": "^3.1.4"
   },
   "@fpm:transform": {
-    "scripts": "@fpm:remove"
+    "scripts": "@fpm:remove",
+    "main":{
+      "@fpm:replace":{
+        "dist\/":""
+      }
+    },
+    "types":{
+      "@fpm:replace":{
+        "dist\/":""
+      }
+    }
   },
   "peerDependencies": {
-    "@guscrawford.com/jyve-core": "^2.0.1"
+    "@guscrawford.com/jyve-core": "^2.0.1b"
   }
 }
