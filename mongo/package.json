@@ -1,6 +1,6 @@
 {
   "name": "@guscrawford.com/jyve-mongo",
-  "version": "0.0.0-alpha",
+  "version": "0.0.0-alpha-rev2",
   "description": "Out-of-the-box Generic Repository via mongoclient for NodeJS",
   "main": "./dist/bin/odata-v4-mongodb-generic-repo.js",
   "types": "./dist/odata-v4-mongodb-generic-repo.d.ts",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../core",
+    "xpostinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../core",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
     "rebuild": "yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
   },
