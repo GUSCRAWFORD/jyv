@@ -14,7 +14,9 @@ router.get('/', async function (req, res, next) {
         res.json(JSON.stringify(result));
     }
     catch (x) {
-        next(x);
+        //next(x);
+        console.error(x);
+        res.json(x);
     }
     return result;
 });

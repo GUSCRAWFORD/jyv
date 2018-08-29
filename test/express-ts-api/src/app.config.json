@@ -1,0 +1,12 @@
+{
+    "local":{
+        "db":{
+            "default":"test-db",
+            "test-db":{
+                "schema":"test-db",
+                "host":"ec2-52-14-16-177.us-east-2.compute.amazonaws.com",
+                "port":37017
+            }
+        }
+    }
+}

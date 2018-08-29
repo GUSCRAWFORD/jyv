@@ -8,8 +8,8 @@ router.get('/DEBUG', function(req, res, next) {
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
   try {
-    var result = await (new jyve.ODataV4MongoDbGenericRepo('users')).query();
-    res.json(JSON.stringify(result));
+    var result = await (new jyve.ODataV4MongoDbGenericRepo('users')).query(req.query);
+    res.json(result);
   } catch (x) {
     next(x);
   }

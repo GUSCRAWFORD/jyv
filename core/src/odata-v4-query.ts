@@ -39,10 +39,10 @@ export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
                     mongoQuery.limit = parseInt(odataQuery.$top);
                     break;
                 case '$select':
-                    Object.keys(odataQuery.$select).forEach(key=>{
+                    odataQuery.$select.split(/\s*,\s*/g).forEach(key=>{
                         if (!mongoQuery.projection) mongoQuery.projection = {};
                         mongoQuery.projection[key]=1;
-                    })
+                    });
                     break;
                 default:
 

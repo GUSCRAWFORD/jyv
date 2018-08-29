@@ -1,6 +1,6 @@
 {
   "name": "@guscrawford.com/jyve",
-  "version": "2.0.0-rc1",
+  "version": "2.0.1",
   "description": "An out-of-the box Generic Repository interface for NodeJS backends.",
   "main": "index.js",
   "repository": "https://github.com/GUSCRAWFORD/jyve.git",
@@ -14,8 +14,9 @@
   "scripts": {
     "mongod": "cd test/mongodb && mongod -f mongod.conf",
     "reset-db": "cd test/mongodb && mongo scripts/reset.mongo.js",
-    "pm2:mongod": "pm2 start --name \"mongod\" npm -- run mongod",
-    "general-express-app": "pm2 start test/general-express-app"
+    "pm2:mongod": "pm2 start --name \"mongod (jyve sandbox)\" npm -- run mongod",
+    "general-express-app": "pm2 kill && yarn pm2:mongod &&  cd test/general-express-app && yarn install && cd ../../ && pm2 start test/general-express-app",
+    "express-ts-api": "pm2 kill && cd test/express-ts-api && tsc && cd ../../ && yarn pm2:mongod &&  pm2 start test/express-ts-api"
   },
   "dependencies": {}
 }

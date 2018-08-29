@@ -1,6 +1,6 @@
 {
   "name": "@guscrawford.com/jyve-core",
-  "version": "0.0.0-alpha",
+  "version": "2.0.1",
   "description": "Out-of-the-box Generic Repo for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
@@ -17,7 +17,7 @@
     "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
     "rebuild":"yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
   },
-  "@package:transform":{
-    "scripts":"@package:remove"
+  "@fpm:transform":{
+    "scripts":"@fpm:remove"
   }
 }
