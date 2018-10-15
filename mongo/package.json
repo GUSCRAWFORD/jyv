@@ -1,15 +1,15 @@
 {
-  "name": "@guscrawford.com/jyve-mongo",
-  "version": "2.0.1c",
-  "description": "Out-of-the-box Generic Repository via mongoclient for NodeJS",
-  "main": "./dist/bin/odata-v4-mongodb-generic-repo.js",
-  "types": "./dist/odata-v4-mongodb-generic-repo.d.ts",
+  "name": "@jyv/mongo",
+  "version": "0.0.0",
+  "description": "Out-of-the-box Generic Repository via MongoClient for NodeJS",
+  "main": "./dist/bin/main.js",
+  "types": "./dist/main.d.ts",
   "repository": "https://github.com/GUSCRAWFORD/jyve",
   "author": "Gus",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "postinstall": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../core",
+    "postinstall": "echo \"✅  Replacing @jyv/core\" && rm -rfv node_modules/@jyv && cd ../core && yarn build && cd ../mongo && fpm add ../core",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
     "rebuild": "yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
   },

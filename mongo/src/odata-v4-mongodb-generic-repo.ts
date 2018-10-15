@@ -1,17 +1,20 @@
 import {
     ODataV4GenericRepo,
-    ODataV42MongoQuery,
     ConnectionInfo,
     APP_CONFIG,
     HasKey,
     OperationContext,
     ExpressLikeODataQuery
-} from '@guscrawford.com/jyve-core';
+} from '@jyv/core';
+import { ODataV42MongoFilter, ODataV42MongoQuery } from './odata-v4-2-mongo-query';
 export { ODataV4GenericRepo, ConnectionInfo, APP_CONFIG, OperationContext };
 const DB_CONFIG = APP_CONFIG[process.env.NODE_ENV||'local'].db, DEFAULT_DB_CONFIG = DB_CONFIG[DB_CONFIG.default];
 import { ObjectID, MongoClient, Db } from "mongodb";
 export { ObjectID, MongoClient, Db };
-export class ODataV4MongoDbGenericRepo<T extends HasKey> extends ODataV4GenericRepo<T> {
+export interface HasMongoKey extends HasKey {
+    _id?:string | object | any;
+}
+export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4GenericRepo<T> {
     constructor(public name:string, public connectionConfig?:ConnectionInfo) {
         super(name);
     }
