@@ -11,27 +11,31 @@
   "scripts": {
     "postinstall": "echo \"✅  Replacing @jyv/core\" && rm -rfv node_modules/@jyv && cd ../core && yarn build && cd ../mongo && fpm add ../core",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "build":"echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
+    "build": "echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
     "rebuild": "yarn clean && yarn build"
   },
+  "peerDependencies":{
+    "@jyv/core":"0.0.0",
+    "@types/node": "^8.10.4",
+    "mongodb": "^3.1.4"
+  },
   "devDependencies": {
-    "@types/node": "^10.9.2",
+    "@guscrawford.com/fpm": "^0.0.10",
+    "@types/node": "^8.10.4",
     "mongodb": "^3.1.4"
   },
   "@fpm:transform": {
     "scripts": "@fpm:remove",
-    "main":{
-      "@fpm:replace":{
-        "dist\/":""
+    "devDependencies":"@fpm:remove",
+    "main": {
+      "@fpm:replace": {
+        "dist/": ""
       }
     },
-    "types":{
-      "@fpm:replace":{
-        "dist\/":""
+    "types": {
+      "@fpm:replace": {
+        "dist/": ""
       }
     }
-  },
-  "peerDependencies": {
-    "@jyv/core": "0.0.0"
   }
 }
