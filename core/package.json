@@ -9,8 +9,8 @@
   "license": "MIT",
   "private": false,
   "peerDependencies": {
-    "@types/node": ">8.10.4",
-    "typescript": ">2.7.2"
+    "@types/node": "^8.10.4",
+    "typescript": "^2.7.2"
   },
   "scripts": {
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
