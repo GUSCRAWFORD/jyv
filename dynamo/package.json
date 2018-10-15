@@ -1,0 +1,36 @@
+{
+  "name": "@jyv/ongo",
+  "version": "0.0.0",
+  "description": "Out-of-the-box Generic Repository via AWS / DynamoDB SDK",
+  "main": "./dist/bin/main.js",
+  "types": "./dist/main.d.ts",
+  "repository": "https://github.com/GUSCRAWFORD/jyve",
+  "author": "Gus",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "postinstall": "echo \"✅  Replacing @jyv/ore\" && fpm install ../core",
+    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
+    "rebuild": "yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
+  },
+  "devDependencies": {
+    "@types/node": "^10.9.2",
+    "mongodb": "^3.1.4"
+  },
+  "@fpm:transform": {
+    "scripts": "@fpm:remove",
+    "main":{
+      "@fpm:replace":{
+        "dist\/":""
+      }
+    },
+    "types":{
+      "@fpm:replace":{
+        "dist\/":""
+      }
+    }
+  },
+  "peerDependencies": {
+    "@guscrawford.com/jyve-core": "^2.0.1b"
+  }
+}
