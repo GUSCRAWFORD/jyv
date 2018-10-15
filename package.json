@@ -1,6 +1,6 @@
 {
-  "name": "@guscrawford.com/jyve",
-  "version": "2.0.1c",
+  "name": "@jyv/src",
+  "version": "0.0.0",
   "description": "An out-of-the box Generic Repository interface for NodeJS backends.",
   "main": "index.js",
   "repository": "https://github.com/GUSCRAWFORD/jyve.git",
