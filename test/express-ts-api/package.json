@@ -5,8 +5,8 @@
   "main":"./bin/www",
   "scripts": {
     "start": "node ./bin/www",
-    "dev:core": "echo \"✅  Replacing @guscrawford.com/jyve-core\" && fpm install ../../core",
-    "dev:mongo": "echo \"✅  Replacing @guscrawford.com/jyve-mongo\" && fpm install ../../mongo",
+    "dev:core": "echo \"✅  Replacing @jyv/core\" && fpm install ../../core",
+    "dev:mongo": "echo \"✅  Replacing @jyv/mongo\" && fpm install ../../mongo",
     "postinstall": "yarn dev:core && yarn dev:mongo"
   },
   "dependencies": {

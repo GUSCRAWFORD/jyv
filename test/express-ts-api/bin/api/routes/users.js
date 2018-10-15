@@ -11,7 +11,7 @@ router.get('/DEBUG', function (req, res, next) {
 router.get('/', async function (req, res, next) {
     try {
         var result = await (new jyve_mongo_1.ODataV4MongoDbGenericRepo('users')).query();
-        res.json(JSON.stringify(result));
+        res.json(result);
     }
     catch (x) {
         //next(x);
