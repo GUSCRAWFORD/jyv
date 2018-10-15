@@ -1,0 +1,11 @@
+{
+    "local":{
+        "db":{
+            "default":"test-db",
+            "test-db":{
+                "table":"test-db",
+                "region":"us-east-1"
+            }
+        }
+    }
+}
