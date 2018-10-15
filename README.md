@@ -1,3 +1,4 @@
-![Jyve](jyve-logo.svg)
+![Jyve](jyve-logo.png)
 
-# Out-of-the-box Generic Repo on NodeJS
+# Out-of-the-box Generic Repo and Pre-configured Middleware for NodeJS / Express
+
