@@ -8,26 +8,25 @@
   "author": "Gus Crawford <gus.crawford@envisageny.com>",
   "license": "MIT",
   "private": false,
-  "devDependencies": {},
   "peerDependencies": {
-    "@types/node": "^10.9.2",
-    "typescript": "^2.7.2"
+    "@types/node": ">8.10.4",
+    "typescript": ">2.7.2"
   },
-  "scripts":{
-    "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "build":"echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
-    "rebuild":"yarn clean && yarn build"
+  "scripts": {
+    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
+    "build": "echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
+    "rebuild": "yarn clean && yarn build"
   },
-  "@fpm:transform":{
-    "scripts":"@fpm:remove",
-    "main":{
-      "@fpm:replace":{
-        "dist\/":""
+  "@fpm:transform": {
+    "scripts": "@fpm:remove",
+    "main": {
+      "@fpm:replace": {
+        "dist/": ""
       }
     },
-    "types":{
-      "@fpm:replace":{
-        "dist\/":""
+    "types": {
+      "@fpm:replace": {
+        "dist/": ""
       }
     }
   }
