@@ -15,7 +15,7 @@
   },
   "scripts":{
     "clean":"echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "build":"echo \"🛠  Building...\" && tsc -diagnostics",
+    "build":"echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
     "rebuild":"yarn clean && yarn build"
   },
   "@fpm:transform":{

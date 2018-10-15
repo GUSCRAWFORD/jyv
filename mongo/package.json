@@ -11,7 +11,8 @@
   "scripts": {
     "postinstall": "echo \"✅  Replacing @jyv/core\" && rm -rfv node_modules/@jyv && cd ../core && yarn build && cd ../mongo && fpm add ../core",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "rebuild": "yarn clean && echo \"🛠  Building...\" && tsc -diagnostics"
+    "build":"echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
+    "rebuild": "yarn clean && yarn build"
   },
   "devDependencies": {
     "@types/node": "^10.9.2",
@@ -31,6 +32,6 @@
     }
   },
   "peerDependencies": {
-    "@guscrawford.com/jyve-core": "^2.0.1b"
+    "@jyv/core": "0.0.0"
   }
 }
