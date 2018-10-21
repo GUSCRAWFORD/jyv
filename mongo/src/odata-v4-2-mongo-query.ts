@@ -10,8 +10,10 @@
  * - Projecting / $select'ing the data
  * - Skip, Limit / $top
  */
-import { ExpressLikeODataQuery } from '@jyv/core';
-
+import {
+    ExpressLikeODataQuery,
+    JYV_CONFIG
+} from '@jyv/core';
 export class MongoQueryMetadata {
     query: MongoFilter = {};
     projection:object = null;
@@ -22,8 +24,10 @@ export class MongoQueryMetadata {
 export class MongoFilter {$and?:any;$or?:any}
 
 export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
-    console.info(`⚙️  Converting OData-V4 Query:`);
-    console.info(odataQuery);
+    if (JYV_CONFIG.debugMode('query')) {
+        console.info(`⚙️  Converting OData-V4 Query:`);
+        console.info(odataQuery);
+    }
     const mongoQuery = new MongoQueryMetadata();
     var queryLevel = mongoQuery.query;
     if (!odataQuery) return mongoQuery;
@@ -53,8 +57,10 @@ export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
     catch (x) {
         console.error(x);
     }
-    console.info(`📦  ... to MongoDB Query:`)
-    console.info(`${JSON.stringify(mongoQuery, null, ' ')}`);
+    if (JYV_CONFIG.debugMode('query')) {
+        console.info(`📦  ... to MongoDB Query:`)
+        console.info(`${JSON.stringify(mongoQuery, null, ' ')}`);
+    }
     return mongoQuery;
 }
 export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new MongoFilter()) {
@@ -74,8 +80,7 @@ export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new 
             if (ignoreWordsUntil === i) {
                 filter = {};
                 filterOpr = {};
-                filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2]==='null'?null:(filterExpr[i+1]==='in'?filterExpr[i+2].split(','):filterExpr[i+2]);
-                filter[word.replace(/\//g,'.')] = filterOpr;
+                toMongoOperation(filterOpr, filterExpr, word, i);
                 if (query.$or)query.$or.push(filter);
                 else query[word.replace(/\//g,'.')] = filterOpr;
                 ignoreWordsUntil = i + 3;
@@ -89,7 +94,7 @@ export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new 
                 if (ignoreWordsUntil === i) {
                     filter = {};
                     filterOpr = {};
-                    filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2]==='null'?null:filterExpr[i+2];
+                    toMongoOperation(filterOpr, filterExpr, word, i);
                     query[word.replace(/\//g,'.')] = filterOpr;
                     ignoreWordsUntil = i + 3;
 
@@ -99,4 +104,16 @@ export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new 
 
     });
     return query;
+}
+function toMongoOperation(filterOpr:any, filterExpr:any, word:string, i:number) {
+    if (filterExpr[i+2]==='null')
+        filterOpr[`$${filterExpr[i+1]}`] = null;
+    else if (filterExpr[i+1]==='in')
+        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2].split(',');
+    else if (isNaN(filterExpr[i+2])) {
+        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2];
+    }
+    else {
+        filterOpr[`$${filterExpr[i+1]}`] = parseFloat(filterExpr[i+2]);
+    }
 }
