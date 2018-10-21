@@ -1,8 +1,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
 var router = express.Router();
-const jyve = require("@guscrawford.com/jyve-mongo");
-const jyve_mongo_1 = require("@guscrawford.com/jyve-mongo");
+const jyve = require("@jyv/mongo");
+const mongo_1 = require("@jyv/mongo");
 // Poop out the result of the export
 router.get('/DEBUG', function (req, res, next) {
     res.json(JSON.stringify(jyve));
@@ -10,7 +10,7 @@ router.get('/DEBUG', function (req, res, next) {
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
     try {
-        var result = await (new jyve_mongo_1.ODataV4MongoDbGenericRepo('users')).query();
+        var result = await (new mongo_1.ODataV4MongoDbGenericRepo('users')).query(req.query);
         res.json(result);
     }
     catch (x) {

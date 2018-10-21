@@ -1,6 +1,6 @@
 {
   "name": "@jyv/ongo",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Out-of-the-box Generic Repository via AWS / DynamoDB SDK",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
