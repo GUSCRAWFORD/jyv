@@ -1,6 +1,6 @@
 {
   "name": "@jyv/ongo",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Out-of-the-box Generic Repository via AWS / DynamoDB SDK",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
@@ -31,6 +31,6 @@
     }
   },
   "peerDependencies": {
-    "@guscrawford.com/jyve-core": "^2.0.1b"
+    "@jyv/core": "0.0.4"
   }
 }
