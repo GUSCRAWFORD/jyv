@@ -40,3 +40,11 @@ catch (e) {
         }
     };
 }
+export const JYV_CONFIG = process.env.JYV_CONFIG?JSON.parse(process.env.JYV_CONFIG):{
+    debug:'',
+    debugMode:debugMode
+}
+function debugMode(mode) {
+    if (JYV_CONFIG.debug==='*') return true;
+    else if (JYV_CONFIG.debug.split(',').find(m=>m===mode)) return true;
+}
