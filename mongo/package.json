@@ -1,6 +1,6 @@
 {
   "name": "@jyv/mongo",
-  "version": "0.0.4",
+  "version": "1.0.2",
   "description": "Out-of-the-box Generic Repository via MongoClient for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
@@ -16,7 +16,7 @@
     "build:release":"yarn build:dist && cd dist && npm publish --access=public"
   },
   "peerDependencies":{
-    "@jyv/core":"0.0.4",
+    "@jyv/core":"1.0.1",
     "@types/node": "^8.10.4",
     "mongodb": "^3.1.4"
   },

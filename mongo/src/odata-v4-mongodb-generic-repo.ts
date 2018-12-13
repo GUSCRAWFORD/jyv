@@ -98,24 +98,26 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.post(context, 'delete');
         return context.result.result.n;
     }
-    private objectifyKeys(qry) { // Keys stored as so "$my-dev-db-key" do not go through MongoDB ObjectID transform, all other properties like 'item_id', 'itemID', 'itemId' will...
+    /**
+     * By default, any MongoDB query with fields ending in '_id' (case insensitive) are treated as `ObjectID`'s
+     * when queried.  For cases where you have an externalId field; query as so {externalId:$fieldValue} to cancel
+     * the `ObjectID` wrapping
+     * @param qry a MongoDB query structure
+     */
+    private objectifyKeys(qry) {
         Object.keys(qry).forEach(k=>{
-            if (typeof qry[k] === 'string' && k.toLowerCase().endsWith('id') && !qry[k].startsWith('$')) {
+            if (typeof qry[k] === 'string' && k.toLowerCase().endsWith('_id') && !qry[k].startsWith('$')) {
                 qry[k] = ObjectID(qry[k]);
             }
             else if (typeof qry[k] === 'object') {
                 if (qry[k] instanceof Array && (k==='$or'||k==='$and')) qry[k].forEach(subQuery=>this.objectifyKeys(subQuery));
-                else if (k.toLowerCase().endsWith('id'))
+                else if (k.toLowerCase().endsWith('_id'))
                     Object.keys(qry[k]).forEach(
                         operation=> {
                             if (typeof qry[k][operation] === "string" && !qry[k][operation].startsWith('$'))
                                 qry[k][operation] = ObjectID(qry[k][operation]);
                             console.log(qry)
                         }
-                        /*Object.keys(qry[k][operation]).forEach(
-                            modifier=>qry[k][operation][modifier] = qry[k][operation][modifier].startsWith('$')
-                            ? qry[k][operation][modifier]
-                            : ObjectID(qry[k][operation][modifier])*/
                     )
             }
         })
@@ -123,7 +125,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
     private convertKeys(context) {
         let keyObject;
         try {
-            keyObject = context.key.indexOf('$')===0?context.key:new ObjectID(context.key);
+            keyObject = context.key.startsWith('$')?context.key:new ObjectID(context.key);
             context.keyObject = keyObject;
         } catch(ex){ }
         var mongoQuery = (context as any).mongodbQuery, queryFilter = mongoQuery.query as HasKey;
@@ -135,7 +137,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.before.connect(context);
         const mongodbQuery = ODataV42MongoQuery(query as ExpressLikeODataQuery),
             client:MongoClient = this.connection || await connect(this.connectionConfig||DEFAULT_DB_CONFIG),
-            db:Db = client.db(DEFAULT_DB_CONFIG.schema);
+            db:Db = client.db(this.connectionConfig.schema||DEFAULT_DB_CONFIG.schema);
         this.connection = client;
         context.key = key;
         context.mongodbQuery = mongodbQuery;
@@ -159,7 +161,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
 export async function connect(connection?:ConnectionInfo): Promise<MongoClient> {
     if (!connection) connection = {};
     if (!connection.host) connection.host = 'localhost';
-    var userAndPwdAt = `${connection.user?(connection.user+':'):''}${connection[connection.user]?connection[connection.user]:''}`,
+    var userAndPwdAt = `${connection.user?(connection.user+':'):''}${connection[connection.user]||connection.pwd?connection[connection.user]||connection.pwd:''}`,
         mongoConnectionString = `mongodb://`
             + `${userAndPwdAt}${connection.user?'@':''}`                                // 'user:pass@'
             + `${connection.host}${!isNaN(connection.port)?(':'+connection.port):''}`   // localhost

@@ -1,6 +1,6 @@
 {
   "name": "@jyv/src",
-  "version": "0.0.3",
+  "version": "1.0.1",
   "description": "An out-of-the box Generic Repository interface for NodeJS backends.",
   "main": "index.js",
   "repository": "https://github.com/GUSCRAWFORD/jyve.git",
@@ -17,9 +17,11 @@
     "pm2:mongod": "pm2 start --name \"mongod (jyve sandbox)\" npm -- run mongod",
     "general-express-app": "pm2 kill && yarn pm2:mongod &&  cd test/general-express-app && yarn install && cd ../../ && pm2 start test/general-express-app",
     "express-ts-api": "pm2 kill && cd test/express-ts-api && yarn dev:core && yarn dev:mongo && tsc && cd ../../ && yarn pm2:mongod &&  pm2 start test/express-ts-api",
-    "release:core":"cd core && yarn build:dist && cd ..",
-    "release:mongo":"cd mongo && yarn build:dist && cd ..",
-    "release:dynamo":"cd dynamo && yarn build:dist && cd .."
+    "release:core": "cd core && yarn build:dist && cd ..",
+    "release:mongo": "cd mongo && yarn build:dist && cd ..",
+    "release:dynamo": "cd dynamo && yarn build:dist && cd .."
   },
-  "dependencies": {}
+  "dependencies": {
+    "source-map-support": "^0.5.9"
+  }
 }

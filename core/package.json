@@ -1,6 +1,6 @@
 {
   "name": "@jyv/core",
-  "version": "0.0.4",
+  "version": "1.0.1",
   "description": "Out-of-the-box Generic Repo for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",

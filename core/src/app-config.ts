@@ -40,8 +40,8 @@ catch (e) {
         }
     };
 }
-export const JYV_CONFIG = process.env.JYV_CONFIG?JSON.parse(process.env.JYV_CONFIG):{
-    debug:'',
+export const JYV_CONFIG = {
+    debug:process.env.JYV_CONFIG_DEBUG||'',
     debugMode:debugMode
 }
 function debugMode(mode) {

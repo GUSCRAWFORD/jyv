@@ -49,6 +49,8 @@ export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
                         mongoQuery.projection[key]=1;
                     });
                     break;
+                case '$orderby':
+                    mongoQuery.sort = ODataV4OrderBy2MongoSort(odataQuery.$orderby)
                 default:
 
             }
@@ -105,15 +107,32 @@ export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new 
     });
     return query;
 }
+function ODataV4OrderBy2MongoSort(orderBy) {
+    var result = {};
+    orderBy.split(',').forEach(ordering=>{
+        var parts = ordering.split(/\s+/),
+        key = parts[0].replace(/\//,'.'), ascDesc = (parts[1]&&parts[1].toLowerCase()==='desc')?-1:1;
+        result[key] = ascDesc
+    });
+    return result;
+}
 function toMongoOperation(filterOpr:any, filterExpr:any, word:string, i:number) {
-    if (filterExpr[i+2]==='null')
-        filterOpr[`$${filterExpr[i+1]}`] = null;
-    else if (filterExpr[i+1]==='in')
-        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2].split(',');
-    else if (isNaN(filterExpr[i+2])) {
-        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2];
+    if (filterExpr[i+1]==='in')
+        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2].split(',').map(val=>interpretJson(val));
+    filterOpr[`$${filterExpr[i+1]}`] = interpretJson(filterExpr[i+2]);
+}
+function trimStringLiterals(str, char) {
+    var result  = str.trim();
+    if (result.startsWith(char)&&result.endsWith(char))
+        result = result.substr(1, result.length - 2);
+    return result;
+}
+function interpretJson(val) {
+    if (val === 'null')
+        return null;
+    else if (isNaN(val)) {
+        ['"',"'"].forEach(char=>val = trimStringLiterals(val, char));
+        return val;
     }
-    else {
-        filterOpr[`$${filterExpr[i+1]}`] = parseFloat(filterExpr[i+2]);
-    }
+    else return parseFloat(val);
 }
