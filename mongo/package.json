@@ -1,6 +1,6 @@
 {
   "name": "@jyv/mongo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Out-of-the-box Generic Repository via MongoClient for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
