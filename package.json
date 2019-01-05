@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@types/node": "^8.10.4",
     "@guscrawford.com/fpm": "^0.0.3",
     "pm2": "^3.0.4"
   },

@@ -12,22 +12,23 @@
     "postinstall": "echo \"✅  Replacing @jyv/core\" && rm -rfv node_modules/@jyv && cd ../core && yarn build && cd ../mongo && fpm add ../core",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics",
-    "build:dist":"yarn clean && yarn build && fpm transform . && cp README.md dist/.",
-    "build:release":"yarn build:dist && cd dist && npm publish --access=public"
+    "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
+    "build:release": "yarn build:dist && cd dist && npm publish --access=public"
   },
-  "peerDependencies":{
-    "@jyv/core":"1.0.1",
-    "@types/node": "^8.10.4",
+  "peerDependencies": {
+    "@jyv/core": "1.0.1",
+    "@types/node": "*",
     "mongodb": "^3.1.4"
   },
   "devDependencies": {
     "@guscrawford.com/fpm": "^0.0.10",
-    "@types/node": "^8.10.4",
+    "@types/mongodb": "^3.1.18",
+    "@types/node": "*",
     "mongodb": "^3.1.4"
   },
   "@fpm:transform": {
     "scripts": "@fpm:remove",
-    "devDependencies":"@fpm:remove",
+    "devDependencies": "@fpm:remove",
     "main": {
       "@fpm:replace": {
         "dist/": ""

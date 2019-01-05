@@ -9,14 +9,14 @@
   "license": "MIT",
   "private": false,
   "peerDependencies": {
-    "@types/node": "^8.10.4",
+    "@types/node": "*",
     "typescript": "^2.7.2"
   },
   "scripts": {
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
-    "build:dist":"yarn clean && yarn build && fpm transform . && cp README.md dist/.",
-    "build:release":"yarn build:dist && cd dist && npm publish --access=public"
+    "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
+    "build:release": "yarn build:dist && cd dist && npm publish --access=public"
   },
   "@fpm:transform": {
     "scripts": "@fpm:remove",

@@ -4,8 +4,8 @@ export interface HasKey {[key:string]:any}
  * Metadata about the "context" of a request, broadly pass-through when implementing custom repos
  */
 export class OperationContext<T extends HasKey>{
-    instance: ODataV4GenericRepo<T>;
-    data:T;
+    instance?: ODataV4GenericRepo<T>;
+    data?:T;
     result:any;
     http: any; // req, res, next, etc.
     key: any;
@@ -50,7 +50,7 @@ export abstract class ODataV4GenericRepo<T extends HasKey> {
     abstract async upsert(key: string, data: any, context?:OperationContext<T>): Promise<T>;
     abstract async update(query: ExpressLikeODataQuery, delta: any, context?:OperationContext<T>): Promise<number>;
     abstract async delete(query: ExpressLikeODataQuery, context?:OperationContext<T>): Promise<number>;
-    connection:object;
+    connection:any;
 }
 /**
  * Ubiquitous interface for details necessary to connect to a data server

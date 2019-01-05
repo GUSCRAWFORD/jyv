@@ -16,12 +16,12 @@ import {
 } from '@jyv/core';
 export class MongoQueryMetadata {
     query: MongoFilter = {};
-    projection:object = null;
-    sort:object = null;
-    skip:number = null;
-    limit:number = null;
+    projection:any = null;
+    sort:{[key:string]:number}|any = null;
+    skip:number|any = null;
+    limit:number|any = null;
 };
-export class MongoFilter {$and?:any;$or?:any}
+export class MongoFilter {$and?:any;$or?:any;[key:string]:any}
 
 export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
     if (JYV_CONFIG.debugMode('query')) {
@@ -35,22 +35,22 @@ export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
         Object.keys(odataQuery).forEach(key=>{
             switch (key) {
                 case '$filter':
-                    ODataV42MongoFilter(odataQuery.$filter, mongoQuery.query);
+                    ODataV42MongoFilter(odataQuery.$filter || '', mongoQuery.query);
                     break;
                 case '$skip':
-                    mongoQuery.skip = parseInt(odataQuery.$skip);
+                    mongoQuery.skip = parseInt(odataQuery.$skip || '');
                     break;
                 case '$top':
-                    mongoQuery.limit = parseInt(odataQuery.$top);
+                    mongoQuery.limit = parseInt(odataQuery.$top || '');
                     break;
                 case '$select':
-                    odataQuery.$select.split(/\s*,\s*/g).forEach(key=>{
+                    (odataQuery.$select as string).split(/\s*,\s*/g).forEach(key=>{
                         if (!mongoQuery.projection) mongoQuery.projection = {};
                         mongoQuery.projection[key]=1;
                     });
                     break;
                 case '$orderby':
-                    mongoQuery.sort = ODataV4OrderBy2MongoSort(odataQuery.$orderby)
+                    mongoQuery.sort = ODataV4OrderBy2MongoSort(odataQuery.$orderby || '')
                 default:
 
             }
@@ -107,9 +107,9 @@ export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new 
     });
     return query;
 }
-function ODataV4OrderBy2MongoSort(orderBy) {
-    var result = {};
-    orderBy.split(',').forEach(ordering=>{
+function ODataV4OrderBy2MongoSort(orderBy:string) {
+    var result:{[key:string]:number} = {};
+    orderBy.split(',').forEach((ordering:string)=>{
         var parts = ordering.split(/\s+/),
         key = parts[0].replace(/\//,'.'), ascDesc = (parts[1]&&parts[1].toLowerCase()==='desc')?-1:1;
         result[key] = ascDesc
@@ -118,16 +118,16 @@ function ODataV4OrderBy2MongoSort(orderBy) {
 }
 function toMongoOperation(filterOpr:any, filterExpr:any, word:string, i:number) {
     if (filterExpr[i+1]==='in')
-        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2].split(',').map(val=>interpretJson(val));
+        filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2].split(',').map((val:any)=>interpretJson(val));
     filterOpr[`$${filterExpr[i+1]}`] = interpretJson(filterExpr[i+2]);
 }
-function trimStringLiterals(str, char) {
+function trimStringLiterals(str:string, char:string) {
     var result  = str.trim();
     if (result.startsWith(char)&&result.endsWith(char))
         result = result.substr(1, result.length - 2);
     return result;
 }
-function interpretJson(val) {
+function interpretJson(val:any) {
     if (val === 'null')
         return null;
     else if (isNaN(val)) {
