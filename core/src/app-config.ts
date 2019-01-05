@@ -44,7 +44,7 @@ export const JYV_CONFIG = {
     debug:process.env.JYV_CONFIG_DEBUG||'',
     debugMode:debugMode
 }
-function debugMode(mode) {
+function debugMode(mode:any) {
     if (JYV_CONFIG.debug==='*') return true;
     else if (JYV_CONFIG.debug.split(',').find(m=>m===mode)) return true;
 }

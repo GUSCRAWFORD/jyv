@@ -1,10 +1,39 @@
 {
   "name": "@guscrawford.com/jyve-test",
   "version": "0.0.0-alpha",
-  "description": "A test suite designed to abuse Jyve",
+  "description": "A test suite designed to abuse Jyv",
   "main": "index.js",
   "repository": "https://github.com/GUSCRAWFORD/jyve.git",
   "author": "Gus",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18",
+    "@types/sinon": "^7.0.3",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "sinon": "^7.2.2",
+    "typescript": "2.7.2"
+  },
+  "nyc": {
+    "silent":false,
+    "report-dir":"../coverage",
+    "exclude": [
+      "**/*test.*s",
+      "**/*mocks.*s"
+    ],
+    "reporter": [
+      "mocha",
+      "html",
+      "lcov",
+      "text-lcov"
+    ]
+  },
+  "scripts": {
+    "build:test": "echo \"⚙️  Building API Tests...\" && cd src && tsc",
+    "mocha": "echo \"☕️  Running Mocha...\" && mocha ./bin/test/src/start.test.js",
+    "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && nyc mocha ./bin/test/src/start.test.js 1> .coverage"
+  }
 }
