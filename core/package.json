@@ -14,7 +14,7 @@
   },
   "scripts": {
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "build": "echo \"🛠  Building...\" && tsc -diagnostics && fpm transform .",
+    "build": "echo \"🛠  Building...\" && tsc -diagnostics",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
     "build:release": "yarn build:dist && cd dist && npm publish --access=public"
   },
