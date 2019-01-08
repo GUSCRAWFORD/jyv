@@ -8,7 +8,7 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-script: yarn install && cd test && yarn install && yarn test:coverage
+script: cd core && yarn install && cd ../mongo && yarn install cd test && yarn install && yarn test:coverage
 after_script:
   - cd ..
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
