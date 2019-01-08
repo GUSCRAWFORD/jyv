@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@guscrawford.com/fpm": "^0.0.11",
     "@types/node": "^8.10.4",
-    "@guscrawford.com/fpm": "^0.0.3",
     "pm2": "^3.0.4"
   },
   "scripts": {
@@ -21,8 +21,8 @@
     "release:core": "cd core && yarn build:dist && cd ..",
     "release:mongo": "cd mongo && yarn build:dist && cd ..",
     "release:dynamo": "cd dynamo && yarn build:dist && cd ..",
-    "test":"cd test && yarn test",
-    "test:coverage":"cd test && yarn test:coverage"
+    "test": "cd test && yarn test",
+    "test:coverage": "cd test && yarn test:coverage"
   },
   "dependencies": {
     "source-map-support": "^0.5.9"
