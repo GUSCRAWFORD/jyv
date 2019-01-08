@@ -80,9 +80,9 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@guscrawford.com/fpm@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@guscrawford.com/fpm/-/fpm-0.0.10.tgz#59d52f09a5bf08c2086ad101009c46dec1d905af"
+"@guscrawford.com/fpm@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@guscrawford.com/fpm/-/fpm-0.0.11.tgz#ac0fb11dccf3e576731bff1c6946b0ced4d635e6"
   dependencies:
     "@types/rimraf" "^2.0.2"
     caporal "^0.10.0"
