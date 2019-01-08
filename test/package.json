@@ -33,7 +33,7 @@
     ]
   },
   "scripts": {
-    "postinstall": "echo \"✅  Replacing @jyv/core\" && rm -rfv node_modules/@jyv && cd ../core && yarn install && yarn build && cd ../test && fpm add ../core",
+    "postinstall": "echo \"✅  Replacing @jyv/mongo\" && cd ../mongo && yarn clean && yarn build && cd ../test && yarn link \"@jyv/core\" && yarn link \"@jyv/mongo\" ",
     "build:test": "echo \"⚙️  Building API Tests...\" && cd src && tsc",
     "mocha": "echo \"☕️  Running Mocha...\" && mocha ./bin/test/src/start.test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",

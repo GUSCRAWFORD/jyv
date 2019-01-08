@@ -13,8 +13,8 @@
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist",
-    "build": "echo \"🛠  Building...\" && tsc -diagnostics",
+    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink",
+    "build": "echo \"🛠  Building...\" && tsc -diagnostics && yarn link",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
     "build:release": "yarn build:dist && cd dist && npm publish --access=public"
   },
