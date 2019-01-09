@@ -1,5 +1,4 @@
-import '../../core/src/main';
-import '../../mongo/src/main';
+
 
 import './core/app-config.test';
 import './core/odata-v4-generic-repo.test';
