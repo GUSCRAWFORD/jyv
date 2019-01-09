@@ -12,7 +12,7 @@
     "@guscrawford.com/fpm": "^0.0.11",
     "@types/mocha": "^5.2.5",
     "@types/mongodb": "^3.1.18",
-    "@types/sinon": "^7.0.3",
+    "@types/sinon": "^2.3.0",
     "mocha": "^5.2.0",
     "mongodb": "^3.1.10",
     "nyc": "^13.1.0",
