@@ -1,3 +1,10 @@
 {
-    "workbench.colorTheme": "Midnight Flames"
+    "workbench.colorTheme": "Midnight Flames",
+    "mocha.sideBarOptions": {
+        "lens": true, 
+        "decoration": true,
+        "autoUpdateTime": 2000,
+        "showDebugTestStatus": true,
+    },
+    "mocha.files.glob": "test/bin/**/*.js"
 }
