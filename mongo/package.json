@@ -9,10 +9,11 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "unlink:non-blocking":"yarn unlink || echo \"Unlink failed: continuing...\"",
     "link": "echo \"✅  Replacing @jyv/core\" && yarn build:deps && yarn link \"@jyv/core\"",
     "build:deps":"echo \"⚙️  Building dependencies\" cd ../core && yarn clean && yarn build && cd ../mongo",
-    "postinstall": "yarn link",
-    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink || true",
+    "postinstall": "yarn unlink:non-blocking && yarn link",
+    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink || echo \"didn't unlink\"",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics && yarn link",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
     "build:release": "yarn build:dist && cd dist && npm publish --access=public"
@@ -23,6 +24,7 @@
     "mongodb": "^3.1.4"
   },
   "devDependencies": {
+    "@jyv/core": "1.0.1",
     "@guscrawford.com/fpm": "^0.0.10",
     "@types/mongodb": "^3.1.18",
     "@types/node": "*",

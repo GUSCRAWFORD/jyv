@@ -11,6 +11,10 @@
     rimraf "^2.6.2"
     source-map-support "^0.5.9"
 
+"@jyv/core@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@jyv/core/-/core-1.0.1.tgz#de09ab6e60f68743d953c48aa40fdc5fbafcf592"
+
 "@types/bson@*":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
@@ -43,10 +47,6 @@
 "@types/node@*":
   version "10.12.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
-
-"@types/node@^8.10.4":
-  version "8.10.39"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.39.tgz#e7e87ad00364dd7bc485c940926345b8ec1a26ca"
 
 "@types/rimraf@^2.0.2":
   version "2.0.2"
