@@ -8,6 +8,9 @@
   "author": "Gus Crawford <gus.crawford@envisageny.com>",
   "license": "MIT",
   "private": false,
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  },
   "peerDependencies": {
     "@types/node": "*",
     "typescript": "^2.7.2"
