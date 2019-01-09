@@ -34,7 +34,7 @@
     ]
   },
   "scripts": {
-    "postinstall": "echo \"✅  Relinking @jyv\" && cd ../mongo && yarn install && cd../core && yarn install && cd ../test && yarn link \"@jyv/core\" && yarn link \"@jyv/mongo\" ",
+    "postinstall": "echo \"✅  Relinking @jyv\" && cd ../mongo && yarn install && cd ../core && yarn install && cd ../test && yarn link \"@jyv/core\" && yarn link \"@jyv/mongo\" ",
     "build:sources":"echo \"🛠 Building Sources...\" && cd ../core && yarn build && cd ../mongo && yarn build",
     "build:tests": "echo \"⚙️  Building API Tests...\" && cd src && tsc",
     "build":"yarn build:sources && yarn postinstall && yarn build:tests",
