@@ -20,14 +20,16 @@
   "peerDependencies": {
     "@jyv/core": "1.0.1",
     "@types/node": "*",
-    "mongodb": "^3.1.4"
+    "mongodb": "^3.1.4",
+    "typescript": "^2.7.2"
   },
   "devDependencies": {
     "@jyv/core": "1.0.1",
     "@guscrawford.com/fpm": "^0.0.10",
     "@types/mongodb": "^3.1.18",
     "@types/node": "*",
-    "mongodb": "^3.1.4"
+    "mongodb": "^3.1.4",
+    "typescript": "^2.7.2"
   },
   "@fpm:transform": {
     "scripts": "@fpm:remove",
