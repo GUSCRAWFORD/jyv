@@ -136,7 +136,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         context.query = query;
         await (this as any).before.connect(context);
         const mongodbQuery = ODataV42MongoQuery(query as ExpressLikeODataQuery),
-            client:MongoClient = ((this as any).connection || await connect((this as any).connectionConfig||DEFAULT_DB_CONFIG)) as any,
+            client:MongoClient = ((this as any).connection || await ODataV4MongoDbGenericRepo.connect((this as any).connectionConfig||DEFAULT_DB_CONFIG)) as any,
             db:Db = client.db(((this as any).connectionConfig && (this as any).connectionConfig.schema)||DEFAULT_DB_CONFIG.schema);
         (this as any).connection = client;
         context.key = key;
@@ -157,6 +157,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         (this as any).connection = null as any;
         return context;
     }
+    static connect = async (connection?:ConnectionInfo)=>connect(connection)
 }
 export async function connect(connection?:ConnectionInfo): Promise<MongoClient> {
     if (!connection) connection = {};

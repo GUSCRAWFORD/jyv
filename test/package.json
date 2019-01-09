@@ -9,6 +9,7 @@
   "private": false,
   "devDependencies": {
     "@jyv/core": "^1.0.1",
+    "@jyv/mongo": "^1.0.3",
     "@guscrawford.com/fpm": "^0.0.11",
     "@types/mocha": "^5.2.5",
     "@types/mongodb": "^3.1.18",
@@ -40,6 +41,6 @@
     "build":"yarn build:sources && yarn postinstall && yarn build:tests",
     "mocha": "echo \"☕️  Running Mocha...\" && mocha ./bin/test/src/start.test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
-    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:tests && nyc mocha ./bin/test/src/start.test.js"
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:tests && nyc mocha ./bin/test/src/start.test.js > .coverage"
   }
 }

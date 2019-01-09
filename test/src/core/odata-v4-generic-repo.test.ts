@@ -1,6 +1,7 @@
 
 
 import 'mocha';
+import {spy} from 'sinon';
 import { notEqual } from 'assert';
 import { ODataV4GenericRepo, OperationContext } from '../../../core/src/odata-v4-generic-repo';
 import { ExpressLikeODataQuery } from '../../../core/src/express-like-odata-query';
@@ -38,6 +39,6 @@ describe(`⚙️  Core Classes`, function (){
             genRepo
             , null
         );
-    })
+    });
 
 });
