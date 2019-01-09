@@ -89,7 +89,7 @@
     rimraf "^2.6.2"
     source-map-support "^0.5.9"
 
-"@jyv/core@*":
+"@jyv/core@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@jyv/core/-/core-1.0.1.tgz#de09ab6e60f68743d953c48aa40fdc5fbafcf592"
 
