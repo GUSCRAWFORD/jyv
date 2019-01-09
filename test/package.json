@@ -40,6 +40,6 @@
     "build":"yarn build:sources && yarn postinstall && yarn build:tests",
     "mocha": "echo \"☕️  Running Mocha...\" && mocha ./bin/test/src/start.test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
-    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && nyc mocha ./bin/test/src/start.test.js 1> .coverage"
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && build:tests nyc mocha ./bin/test/src/start.test.js 1> .coverage"
   }
 }
