@@ -11,7 +11,7 @@
   "scripts": {
     "relink":"yarn unlink || echo \"Unlink failed: continuing...\" && yarn link",
     "build:deps":"echo \"⚙️  Building dependencies\" cd ../core && yarn install && yarn build && cd ../mongo",
-    "postinstall": "yarn build",
+    "postinstall": "cd ../core && yarn install && cd ../mongo && yarn build",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink:non-blocking",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
