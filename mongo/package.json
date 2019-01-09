@@ -9,12 +9,11 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "unlink:non-blocking":"yarn unlink || echo \"Unlink failed: continuing...\"",
-    "link": "echo \"✅  Replacing @jyv/core\" && yarn build:deps && yarn link \"@jyv/core\"",
-    "build:deps":"echo \"⚙️  Building dependencies\" cd ../core && yarn clean && yarn build && cd ../mongo",
-    "postinstall": "yarn unlink:non-blocking && yarn link",
-    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink || echo \"didn't unlink\"",
-    "build": "echo \"🛠  Building...\" && tsc -diagnostics && yarn link",
+    "relink":"yarn unlink || echo \"Unlink failed: continuing...\" && yarn link",
+    "build:deps":"echo \"⚙️  Building dependencies\" cd ../core && yarn install && yarn build && cd ../mongo",
+    "postinstall": "yarn build",
+    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink:non-blocking",
+    "build": "echo \"🛠  Building...\" && tsc -diagnostics",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
     "build:release": "yarn build:dist && cd dist && npm publish --access=public"
   },

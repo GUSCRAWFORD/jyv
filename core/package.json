@@ -13,8 +13,8 @@
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "unlink:non-blocking":"yarn unlink || echo \"Unlink failed: continuing...\"",
-    "postinstall": "yarn unlink:non-blocking && yarn link",
+    "relink":"yarn unlink || echo \"Unlink failed: continuing...\" && yarn link",
+    "postinstall": "yarn build",
     "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink || echo \"\"",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics && yarn link",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
