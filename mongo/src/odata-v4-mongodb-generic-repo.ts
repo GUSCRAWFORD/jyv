@@ -134,27 +134,27 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
     async pre(key:any, query:any, data:any, context:any, before:string) {
         if (!context) context = {};
         context.query = query;
-        await this.before.connect(context);
+        await (this as any).before.connect(context);
         const mongodbQuery = ODataV42MongoQuery(query as ExpressLikeODataQuery),
-            client:MongoClient = this.connection || await connect(this.connectionConfig||DEFAULT_DB_CONFIG),
-            db:Db = client.db((this.connectionConfig && this.connectionConfig.schema)||DEFAULT_DB_CONFIG.schema);
-        this.connection = client;
+            client:MongoClient = ((this as any).connection || await connect((this as any).connectionConfig||DEFAULT_DB_CONFIG)) as any,
+            db:Db = client.db(((this as any).connectionConfig && (this as any).connectionConfig.schema)||DEFAULT_DB_CONFIG.schema);
+        (this as any).connection = client;
         context.key = key;
         context.mongodbQuery = mongodbQuery;
         context.db = db;
         context.data = data;
         this.convertKeys(context);
-        await this.before.any(context);
-        await (this.before as any)[before](context);
+        await (this as any).before.any(context);
+        await ((this as any).before as any)[before](context);
         return context;
     }
     async post(context:any, after:string) { // Like "post"-operation (ALL HTTP verbs ought to map to CRUD names below)
-        await this.after.any(context);
-        await (this.after as any)[after](context);
-        if(this.connection)
-            (this.connection as any).close();
-        await this.after.connect(context);
-        this.connection = null;
+        await (this as any).after.any(context);
+        await ((this as any).after as any)[after](context);
+        if((this as any).connection)
+            ((this as any).connection as any).close();
+        await (this as any).after.connect(context);
+        (this as any).connection = null as any;
         return context;
     }
 }

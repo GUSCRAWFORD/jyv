@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "An out-of-the box Generic Repository interface for NodeJS backends.",
   "main": "index.js",
-  "repository": "https://github.com/GUSCRAWFORD/jyve.git",
+  "repository": "https://github.com/GUSCRAWFORD/jyv.git",
   "author": "Gus Crawford <gus.crawford@envisageny.com>",
   "license": "MIT",
   "private": false,
@@ -22,7 +22,8 @@
     "release:mongo": "cd mongo && yarn build:dist && cd ..",
     "release:dynamo": "cd dynamo && yarn build:dist && cd ..",
     "test": "cd test && yarn test",
-    "test:coverage": "cd test && yarn test:coverage"
+    "test:coverage": "cd test && yarn test:coverage && cd ../",
+    "postinstall": "cd core && yarn install && cd ../mongo && yarn install && cd ../test && yarn install"
   },
   "dependencies": {
     "source-map-support": "^0.5.9"

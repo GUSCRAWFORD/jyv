@@ -8,10 +8,11 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@jyv/core": "^1.0.1",
     "@guscrawford.com/fpm": "^0.0.11",
     "@types/mocha": "^5.2.5",
     "@types/mongodb": "^3.1.18",
-    "@types/sinon": "^7.0.3",
+    "@types/sinon": "^4.3.3",
     "mocha": "^5.2.0",
     "mongodb": "^3.1.10",
     "nyc": "^13.1.0",
@@ -33,10 +34,12 @@
     ]
   },
   "scripts": {
-    "postinstall": "echo \"✅  Replacing @jyv\" && cd ../mongo && yarn clean && yarn build && cd ../test && yarn link \"@jyv/core\" && yarn link \"@jyv/mongo\" ",
-    "build:test": "echo \"⚙️  Building API Tests...\" && cd src && tsc",
+    "postinstall": "echo \"✅  Relinking @jyv\" && cd ../mongo && yarn link && cd ../core && yarn link && cd ../test && yarn link \"@jyv/core\" && yarn link \"@jyv/mongo\" ",
+    "build:sources":"echo \"🛠 Building Sources...\" && cd ../core && yarn build && cd ../mongo && yarn build",
+    "build:tests": "echo \"⚙️  Building API Tests...\" && cd src && tsc",
+    "build":"yarn build:sources && yarn postinstall && yarn build:tests",
     "mocha": "echo \"☕️  Running Mocha...\" && mocha ./bin/test/src/start.test.js",
     "test": "echo \"🔬  Running Unit Tests...\" && yarn build:test && yarn mocha",
-    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:test && nyc mocha ./bin/test/src/start.test.js 1> .coverage"
+    "test:coverage": "echo \"📊  Running Unit Tests and Coverage Report...\" && yarn build:tests && nyc mocha ./bin/test/src/start.test.js"
   }
 }
