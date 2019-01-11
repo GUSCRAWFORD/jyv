@@ -10,10 +10,22 @@ import { ODataV4MongoDbGenericRepo } from '../../../mongo/src/odata-v4-mongodb-g
 //import { ExpressLikeODataQuery } from '../../../core/src/express-like-odata-query';
 process.env.DEFAULT_SESSION_HEADER='x';
 //const USERS_ROUTE = 'users';
+class MockCursor {
+    skip = ()=>this;
+    limit = ()=>this;
+    sort = ()=>this;
+    toArray=()=>[];
+    project=()=>this;
+}
 class MockCollection {
     find = spy(
-        ()=>[]
-    )
+        ()=>new MockCursor()
+    );
+    insertOne = spy(()=>Object.assign({},{insertedId:'key'}));
+    findOne = spy();
+    update = spy(()=>Object.assign({},{modifiedCount:0}));
+    updateOne = spy(()=>Object.assign({},{upsertedId:'key'}));
+    remove = spy(()=>Object.assign({},{n:0}));
 }
 describe(`🍃  Mongo Classes`, function (){
     //console.info(routes);
@@ -42,41 +54,80 @@ describe(`🍃  Mongo Classes`, function (){
             ODataV4MongoDbGenericRepo.connect = spy(
                 ()=>mockClient
             );
-        })
+        });
         it(`instances`, function () {
             notEqual( genRepo , null );
         });
         describe('.pre(...)', function() {
-            it(`calls before.connect `, async function () {
+            beforeEach(async function(){
                 await genRepo.pre(null, null, null, mockContext, 'query');
+            });
+            it(`calls before.connect `, function () {
                 equal(
                     (genRepo.before.connect as any).called,
                     true
                 )
             });
-            it(`calls connect `, async function () {
-                await genRepo.pre(null, null, null, mockContext, 'query');
+            it(`calls connect `, function () {
                 equal(
                     (ODataV4MongoDbGenericRepo.connect as any).called,
                     true
                 )
             });
+            it(`calls db `, function () {
+                equal(
+                    (mockClient.db as any).called,
+                    true
+                )
+            });
+            it(`sets .connection to MongoClient`, function () {
+                equal(
+                    genRepo.connection,
+                    mockClient
+                )
+            });
         });
+        ['create','read','update',/*'delete',*/'query','upsert'].forEach(operationName=>{
+            describe(`.${operationName}`,function() {
+                var result, args:any[];
+                beforeEach(async function(){
+                    //console.info(genRepo)
+                    spy(genRepo, 'pre');
+                    args = [];
+                    switch (operationName) {
+                        case 'read': case 'upsert':
+                            args.push('key');
+                        default:
+                    }
+                    switch (operationName) {
+                        case 'update': case 'upsert': case 'create':
+                            args.push({property:'value'})
+                        default:
+                    }
+                    result = await (genRepo as any)[operationName].apply(genRepo, args);
+                });
+                it('calls pre', function() {
+                    equal( (genRepo.pre as any).called, true);
+                })
+            })
+        })
         describe('.post(...)', function() {
-            it(`calls after.connect `, async function () {
+            beforeEach(async function() {
+                await genRepo.pre(null, null, null, mockContext, 'query');
                 await genRepo.post(mockContext, 'query');
+            });
+            it(`calls after.connect `, async function () {
                 equal(
                     (genRepo.after.connect as any).called,
                     true
                 )
             });
-            // it(`calls close `, async function () {
-            //     await genRepo.post( mockContext, 'query');
-            //     equal(
-            //         (mockClient.close as any).called,
-            //         true
-            //     )
-            // });
+            it(`calls close `, async function () {
+                equal(
+                    (mockClient.close as any).called,
+                    true
+                )
+            });
         });
     });
 
