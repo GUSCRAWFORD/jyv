@@ -6,3 +6,4 @@ coverage
 test/.nyc*
 test/.coverage
 test/live
+**/docs
