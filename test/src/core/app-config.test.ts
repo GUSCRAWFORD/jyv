@@ -1,9 +1,8 @@
 
 
 import 'mocha';
-import { equal } from 'assert';
+import { equal, notEqual } from 'assert';
 import { JYV_CONFIG } from '../../../core/src/app-config';
-process.env.DEFAULT_SESSION_HEADER='x';
 //const USERS_ROUTE = 'users';
 describe(`⚙️  Core Configs`, function (){
     //console.info(routes);
@@ -13,27 +12,20 @@ describe(`⚙️  Core Configs`, function (){
             JYV_CONFIG.debugMode('anything')
             , true
         );
-    })
-    // it(`http://localhost:${process.env.PORT}/users returns "unauthorized" (${UNAUTHORIZED})`, async function() {
-
-    //     var result;
-    //     try {
-    //         result = await Request.get(`http://localhost:${process.env.PORT}/users`);
-    //     }
-    //     catch(e) {
-    //         equal(e.statusCode, UNAUTHORIZED)
-    //     }
-    //     return result;
-    // });
-    // it(`http://localhost:${process.env.PORT}/users/x returns "unauthorized" (${UNAUTHORIZED})`, async function () {
-    //     var result;
-    //     try {
-    //         result = await Request.get(`http://localhost:${process.env.PORT}/users/x`);
-    //     }
-    //     catch(e) {
-    //         equal(e.statusCode, UNAUTHORIZED)
-    //     }
-    //     return result;
-    // });
+    });
+    it(`🐞 when JYV_CONFIG.debug==='test-debug-topic', JYVE_CONFIG.debugMode('anything') does not return true`, function () {
+        JYV_CONFIG.debug="test-debug-topic";
+        notEqual(
+            JYV_CONFIG.debugMode('anything')
+            , true
+        );
+    });
+    it(`🐞 when JYV_CONFIG.debug==='test-debug-topic', JYVE_CONFIG.debugMode('test-debug-topic') returns true`, function () {
+        JYV_CONFIG.debug="test-debug-topic";
+        equal(
+            JYV_CONFIG.debugMode('test-debug-topic')
+            , true
+        );
+    });
 });
 //process.exit(0);
