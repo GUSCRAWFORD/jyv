@@ -22,7 +22,10 @@ export class MongoQueryMetadata {
     limit:number|any = null;
 };
 export class MongoFilter {$and?:any;$or?:any;[key:string]:any}
-
+/**
+ * Create **MongoDB** query metadata from an `object` with **odata** *v4* query parameters
+ * @param odataQuery An express-like `object`ified query-string with odata compliant parameters
+ */
 export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
     if (JYV_CONFIG.debugMode('query')) {
         console.info(`⚙️  Converting OData-V4 Query:`);
@@ -65,6 +68,11 @@ export function ODataV42MongoQuery(odataQuery:ExpressLikeODataQuery) {
     }
     return mongoQuery;
 }
+/**
+ * Create a **MongoDB** query `object` from an **odata** `$filter` string
+ * @param odataFilter the `$filter` sub-part of an **odata** query
+ * @param query the **mongo** query `object`
+ */
 export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new MongoFilter()) {
     if (odataFilter.startsWith("'")&&odataFilter.endsWith("'"))
         odataFilter = odataFilter.substring(1, odataFilter.length-1);
@@ -107,6 +115,10 @@ export function ODataV42MongoFilter(odataFilter:string, query:MongoFilter = new 
     });
     return query;
 }
+/**
+ * Create a **MongoDB** *sort structure* from an **odata** `$orderby` string
+ * @param orderBy the **odata** `orderby` string
+ */
 function ODataV4OrderBy2MongoSort(orderBy:string) {
     var result:{[key:string]:number} = {};
     orderBy.split(',').forEach((ordering:string)=>{
@@ -116,17 +128,34 @@ function ODataV4OrderBy2MongoSort(orderBy:string) {
     });
     return result;
 }
+
+/**
+ * Create a **MongoDB** operator from a sub-section of an **odata** `$filter` expression
+ * @param filterOpr 
+ * @param filterExpr 
+ * @param word consider removing
+ * @param i 
+ */
 function toMongoOperation(filterOpr:any, filterExpr:any, word:string, i:number) {
     if (filterExpr[i+1]==='in')
         filterOpr[`$${filterExpr[i+1]}`] = filterExpr[i+2].split(',').map((val:any)=>interpretJson(val));
     filterOpr[`$${filterExpr[i+1]}`] = interpretJson(filterExpr[i+2]);
 }
+/**
+ * Trim whitespace and characters that would parse value as a string-literal
+ * @param str string to operate on
+ * @param char string literal character to treat for
+ */
 function trimStringLiterals(str:string, char:string) {
     var result  = str.trim();
     if (result.startsWith(char)&&result.endsWith(char))
         result = result.substr(1, result.length - 2);
     return result;
 }
+/**
+ * Try to parse value as a number, fallback to a string-literal, return real `null` for a string value of `"null"`
+ * @param val 
+ */
 function interpretJson(val:any) {
     if (val === 'null')
         return null;

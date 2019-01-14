@@ -15,7 +15,8 @@
     "clean": "echo \"🗑  Cleaning build...\" && rimraf dist && yarn unlink:non-blocking",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics",
     "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md CHANGELOG.md dist/.",
-    "build:release": "yarn build:dist && cd dist && npm publish --access=public"
+    "build:release": "yarn build:dist && cd dist && npm publish --access=public",
+    "docs": "typedoc --out docs src"
   },
   "peerDependencies": {
     "@jyv/core": "1.0.2",
@@ -30,6 +31,7 @@
     "@types/node": "*",
     "mongodb": "^3.1.4",
     "rimraf": "^2.6.3",
+    "typedoc": "^0.14.1",
     "typescript": "^2.7.2"
   },
   "@fpm:transform": {

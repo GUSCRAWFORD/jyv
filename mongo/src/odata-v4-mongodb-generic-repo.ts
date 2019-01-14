@@ -18,7 +18,12 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
     constructor(public name:string, public connectionConfig?:ConnectionInfo) {
         super(name);
     }
-    //GET /
+
+    /**
+     * Query a collection or table `GET /[?$filter=...]`
+     * @param query an object with odata-v4 query properties like `$select`, `$filter`, etc.
+     * @param context not required, see `OperationContext<T>`
+     */
     async query (query?: ExpressLikeODataQuery, context?:OperationContext<T>) : Promise<Array<T>> {
         context = await this.pre(null, query, null, context, 'query');
         var mongoQuery = (context as any).mongodbQuery, queryFilter = mongoQuery.query as HasKey;
@@ -32,7 +37,13 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.post(context, 'query');
         return (context as any).result as any;
     }
-    //GET /:id
+
+    /**
+     * Read a record or document from a collection or table by default key `GET /:key[?$filter=...]`
+     * @param key a primary key or data-base level index
+     * @param query an object with odata-v4 query properties like `$select`, `$filter`, etc.
+     * @param context not required, see `OperationContext<T>`
+     */
     async read(key:string,  query?:ExpressLikeODataQuery, context?:OperationContext<T>) : Promise<T> {
         context = await this.pre(key, query, null, context, 'read');
         (context as any).result = await (context as any).db.collection(this.name)
@@ -42,7 +53,12 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.post(context, 'read');
         return (context as any).result;
     }
-    // POST /
+
+    /**
+     * Create a new record `POST /`
+     * @param data data to save
+     * @param context not required, see `OperationContext<T>`
+     */
     async create(data:T, context?:OperationContext<T>) : Promise<T> {
         context = await this.pre(null, null, data, context, 'create');
         var result = await (context as any).db
@@ -52,7 +68,13 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.post(context, 'create');
         return data;
     }
-    // PUT /:id
+
+    /**
+     * Insert or update a new record `PUT /:key`
+     * @param key a primary key or data-base level index
+     * @param data data to save
+     * @param context not required, see `OperationContext<T>`
+     */
     async upsert(key: string,data: any, context?:OperationContext<T>) : Promise<T> {
         context = await this.pre(key, null, data, context,'update');
         (context as any).result = await (context as any).db
@@ -69,7 +91,13 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.post(context, 'update')
         return (context as any).data;
     }
-    // PATCH /
+    
+    /**
+     * Bulk update records matching a query `PATCH /?$filter=...`
+     * @param query an object with odata-v4 query properties like `$select`, `$filter`, etc.
+     * @param delta data changes to save
+     * @param context not required, see `OperationContext<T>`
+     */
     async update(query: ExpressLikeODataQuery, delta: any, context?:OperationContext<T>) : Promise<number> {
         context = await this.pre(null, query, delta, context,'update');
         (context as any).result = await (context as any).db
@@ -85,7 +113,11 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         return (context as any).result.modifiedCount;
     }
 
-    // DELETE /
+    /**
+     * Bulk delete records matching a query `DELETE /[?$filter=...]`
+     * @param query an object with odata-v4 query properties like `$select`, `$filter`, etc.
+     * @param context not required, see `OperationContext<T>`
+     */
     async delete(query?: ExpressLikeODataQuery, context?:OperationContext<T>) : Promise<number> {
         context = await this.pre(null, query, null, null, 'delete');
         //console.log('deleteing')
@@ -98,6 +130,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await this.post(context, 'delete');
         return (context as any).result.result.n;
     }
+
     /**
      * By default, any MongoDB query with fields ending in '_id' (case insensitive) are treated as `ObjectID`'s
      * when queried.  For cases where you have an externalId field; query as so {externalId:$fieldValue} to cancel
@@ -122,6 +155,11 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
             }
         })
     }
+
+    /**
+     * De-serialize keys
+     * @param context `OperationContext`
+     */
     private convertKeys(context:any) {
         let keyObject;
         try {
@@ -131,6 +169,14 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         var mongoQuery = (context as any).mongodbQuery, queryFilter = mongoQuery.query as HasKey;
         this.objectifyKeys(queryFilter);
     }
+    /**
+     * Prepare for an operation
+     * @param key 
+     * @param query 
+     * @param data 
+     * @param context 
+     * @param before 
+     */
     async pre(key:any, query:any, data:any, context:any, before:string) {
         if (!context) context = {};
         context.query = query;
@@ -148,6 +194,11 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         await ((this as any).before as any)[before](context);
         return context;
     }
+    /**
+     * Post operation
+     * @param context 
+     * @param after 
+     */
     async post(context:any, after:string) { // Like "post"-operation (ALL HTTP verbs ought to map to CRUD names below)
         await (this as any).after.any(context);
         await ((this as any).after as any)[after](context);
@@ -157,8 +208,15 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
         (this as any).connection = null as any;
         return context;
     }
+    /**
+     * Return an instance of or connect to this repo's data center
+     */
     static connect = async (connection?:ConnectionInfo)=>connect(connection)
 }
+/**
+ * Return a `MongoClient` based on the configured `ConnectionInfo`
+ * @param connection connection parameters
+ */
 export async function connect(connection?:ConnectionInfo): Promise<MongoClient> {
     if (!connection) connection = {};
     if (!connection.host) connection.host = 'localhost';
