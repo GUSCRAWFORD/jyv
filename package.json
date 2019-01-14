@@ -25,7 +25,8 @@
     "test": "cd test && yarn test",
     "test:coverage": "cd test && yarn test:coverage && cd ../",
     "postinstall": "cd core && yarn install && cd ../mongo && yarn install && cd ../test && yarn install",
-    "link":"echo \"🔗  Linking sub-modules...\" && cd core && yarn build && yarn link && cd ../mongo && yarn build && yarn link"
+    "link":"echo \"🔗  Linking sub-modules...\" && cd core && yarn build && yarn link && cd ../mongo && yarn build && yarn link",
+    "docs":"cd core && yarn docs && cd ../mongo && yarn docs"
   },
   "dependencies": {
     "source-map-support": "^0.5.9"
