@@ -38,7 +38,7 @@
   },
   "scripts": {
     "fix-mocha-sidebar-coverage":"echo \"👟  Setting execute permissions on Mocha Sidebar Coverage\" &&  cd ~/.vscode/extensions/maty.vscode-mocha-sidebar-0.20.22/ && chmod +x node_modules/nyc/bin/nyc.js node_modules/nyc/bin/wrap.js node_modules/mocha/bin/mocha",
-    "postinstall": "echo \"✅  Relinking @jyv\" && cd ../core && yarn link && cd ../test && yarn link \"@jyv/core\"",
+    "postinstall": "echo \"✅  Relinking @jyv\" && cd ../mongo && yarn link && cd ../core && yarn link && cd ../test && yarn link \"@jyv/core\" && yarn link \"@jyv/mongo\" ",
     "build:sources": "echo \"🛠 Building Sources...\" && cd ../core && yarn build && cd ../mongo && yarn build",
     "build:tests": "echo \"⚙️  Building API Tests...\" && cd src && tsc",
     "build": "yarn build:sources && yarn postinstall && yarn build:tests",
