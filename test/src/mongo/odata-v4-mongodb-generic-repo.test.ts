@@ -25,7 +25,7 @@ class MockCollection {
     findOne = spy();
     update = spy(()=>Object.assign({},{modifiedCount:0}));
     updateOne = spy(()=>Object.assign({},{upsertedId:'key'}));
-    remove = spy(()=>Object.assign({},{n:0}));
+    remove = spy(()=>Object.assign({},{result:{n:0}}));
 }
 describe(`🍃  Mongo Classes`, function (){
     //console.info(routes);
@@ -33,7 +33,12 @@ describe(`🍃  Mongo Classes`, function (){
         var genRepo:ODataV4MongoDbGenericRepo<any> = null as any,
         mockContext:any, mockCollection:MockCollection,
         mockDb:{collection:(args:any)=>MockCollection},
-        mockClient:{db:()=>MockCollection,close:()=>any};
+        mockClient:{db:()=>MockCollection,close:()=>any},
+        mockKeyGen = (n:number)=>{
+            var nTo9 = n.toString().substr(0,9);
+            nTo9 += '0'.repeat(9-nTo9.length);
+            return `key${nTo9}`
+        }, mockKey:string;
         beforeEach(function(){
             genRepo = new ODataV4MongoDbGenericRepo<any>('test');
             genRepo.before.connect = spy();
@@ -54,6 +59,7 @@ describe(`🍃  Mongo Classes`, function (){
             ODataV4MongoDbGenericRepo.connect = spy(
                 ()=>mockClient
             );
+            mockKey = mockKeyGen(0);
         });
         it(`instances`, function () {
             notEqual( genRepo , null );
@@ -87,23 +93,32 @@ describe(`🍃  Mongo Classes`, function (){
                 )
             });
         });
-        ['create','read','update',/*'delete',*/'query','upsert'].forEach(operationName=>{
+        ['create','read','update','delete','query','upsert'].forEach(operationName=>{
             describe(`.${operationName}`,function() {
                 var result, args:any[];
                 beforeEach(async function(){
                     //console.info(genRepo)
                     spy(genRepo, 'pre');
                     args = [];
+                    // Calls that need a key
                     switch (operationName) {
                         case 'read': case 'upsert':
-                            args.push('key');
+                            args.push(mockKey);
                         default:
                     }
+                    // Calls that need a query
+                    switch (operationName) {
+                        case 'query': case 'update': case 'delete':
+                            args.push({$filter:`_id eq "${mockKey}"`});
+                        default:
+                    }
+                    // Calls that take a delta or payload
                     switch (operationName) {
                         case 'update': case 'upsert': case 'create':
-                            args.push({property:'value'})
+                            args.push({_id:mockKey,property:'value'})
                         default:
                     }
+                    args.push(mockContext);
                     result = await (genRepo as any)[operationName].apply(genRepo, args);
                 });
                 it('calls pre', function() {

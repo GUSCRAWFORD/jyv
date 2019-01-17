@@ -161,11 +161,17 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
      * @param context `OperationContext`
      */
     private convertKeys(context:any) {
+        //console.error(context)
         let keyObject;
         try {
-            keyObject = context.key.startsWith('$')?context.key:new ObjectID(context.key);
+            if (context.key)
+                keyObject = context.key.startsWith('$')?context.key:new ObjectID(context.key);
             context.keyObject = keyObject;
-        } catch(ex){ }
+        } catch(ex) {
+            console.error(ex);
+            if (ex && ex.message && ex.message.indexOf('12 bytes or a string of 24 hex')!==-1)
+                console.error(`... tried to convert "${context.key}" to ObjectID`);
+        }
         var mongoQuery = (context as any).mongodbQuery, queryFilter = mongoQuery.query as HasKey;
         this.objectifyKeys(queryFilter);
     }
@@ -178,6 +184,7 @@ export class ODataV4MongoDbGenericRepo<T extends HasMongoKey> extends ODataV4Gen
      * @param before 
      */
     async pre(key:any, query:any, data:any, context:any, before:string) {
+        //console.error(`⚠️`)
         if (!context) context = {};
         context.query = query;
         await (this as any).before.connect(context);
