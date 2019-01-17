@@ -5,6 +5,6 @@
 coverage
 test/.nyc*
 test/.coverage
-test/live
+test/live*
 **/docs
 **/.untrack-*
