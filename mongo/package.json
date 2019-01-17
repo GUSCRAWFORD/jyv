@@ -4,17 +4,15 @@
   "description": "Out-of-the-box Generic Repository via MongoClient for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
-  "repository": "https://github.com/GUSCRAWFORD/jyve",
+  "repository": "https://github.com/GUSCRAWFORD/jyv",
   "author": "Gus",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "unlink:non-blocking": "yarn unlink || echo \"Unlink failed: continuing...\"",
     "build:deps": "echo \"⚙️  Building dependencies\" cd ../core && yarn install && yarn build && cd ../mongo",
-    "clean": "echo \"🗑  Cleaning build...\" && rimraf dist && yarn unlink:non-blocking",
+    "clean": "echo \"🗑  Cleaning build...\" && rimraf dist",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics",
-    "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md CHANGELOG.md dist/.",
-    "build:release": "yarn build:dist && cd dist && npm publish --access=public",
+    "build:release": "yarn clean && yarn build && fpm transform . && cp README.md CHANGELOG.md dist/.",
     "docs": "typedoc --out docs src"
   },
   "peerDependencies": {
