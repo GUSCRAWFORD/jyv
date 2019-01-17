@@ -12,7 +12,7 @@
     "build:deps": "echo \"⚙️  Building dependencies\" cd ../core && yarn install && yarn build && cd ../mongo",
     "clean": "echo \"🗑  Cleaning build...\" && rimraf dist",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics",
-    "build:release": "yarn clean && yarn build && fpm transform . && cp README.md CHANGELOG.md dist/.",
+    "build:release": "yarn clean && yarn build && fpm transform . && cp README.md CHANGELOG.md dist/. && yarn docs",
     "docs": "typedoc --out docs src"
   },
   "peerDependencies": {
