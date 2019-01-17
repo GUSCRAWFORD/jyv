@@ -1,5 +1,12 @@
 import { join } from 'path';
+
+/**
+ * A map generic
+ */
 export interface JyMap<T> { [key:string]:T };
+/**
+ * Fundamental details about a data-center connection
+ */
 export class ConnectionConfig {
     schema?:string;
     host?:string;
@@ -7,6 +14,9 @@ export class ConnectionConfig {
     user?:string;
 }
 
+/**
+ * Root or default database connection
+ */
 export class RootDbConfig {
     default?:string;
 }
@@ -40,10 +50,18 @@ catch (e) {
         }
     };
 }
+/**
+ * JYV_CONFIG options
+ * JYV_CONFIG_DEBUG=*|<topic>[,<other-topic>,...]
+ */
 export const JYV_CONFIG = {
     debug:process.env.JYV_CONFIG_DEBUG||'',
     debugMode:debugMode
 }
+/**
+ * True or false?  Jyv components are set to debug on the given "mode" or topic
+ * @param mode Topic that must be set
+ */
 function debugMode(mode:any) {
     if (JYV_CONFIG.debug==='*') return true;
     else if (JYV_CONFIG.debug.split(',').find(m=>m===mode)) return true;

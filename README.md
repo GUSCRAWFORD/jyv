@@ -1,4 +1,4 @@
-![Jyv](jyv-logo.png)
+![Jyv](http://jyv.s3-website-us-east-1.amazonaws.com/jyv-logo.png)
 
 [![Build Status](https://travis-ci.com/GUSCRAWFORD/jyv.svg?branch=master)](https://travis-ci.com/GUSCRAWFORD/jyv)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4ed8f46f4aa08e1ee410/maintainability)](https://codeclimate.com/github/GUSCRAWFORD/jyv/maintainability)

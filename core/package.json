@@ -1,6 +1,6 @@
 {
   "name": "@jyv/core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Out-of-the-box Generic Repo for NodeJS",
   "main": "./dist/bin/main.js",
   "types": "./dist/main.d.ts",
@@ -9,6 +9,8 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "rimraf": "^2.6.3",
+    "typedoc": "^0.14.1",
     "typescript": "^2.7.2"
   },
   "peerDependencies": {
@@ -16,15 +18,16 @@
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "relink":"yarn unlink || echo \"Unlink failed: continuing...\" && yarn link",
+    "relink": "yarn unlink || echo \"Unlink failed: continuing...\" && yarn link",
     "postinstall": "yarn build",
-    "clean": "echo \"🗑  Cleaning build...\" && rm -rfv dist && yarn unlink || echo \"\"",
+    "clean": "echo \"🗑  Cleaning build...\" && rimraf dist",
     "build": "echo \"🛠  Building...\" && tsc -diagnostics",
-    "build:dist": "yarn clean && yarn build && fpm transform . && cp README.md dist/.",
-    "build:release": "yarn build:dist && cd dist && npm publish --access=public"
+    "build:release": "yarn clean && yarn build && fpm transform . && cp README.md CHANGELOG.md dist/. && yarn docs",
+    "docs":"typedoc --out docs src"
   },
   "@fpm:transform": {
     "scripts": "@fpm:remove",
+    "devDependencies":"@fpm:remove",
     "main": {
       "@fpm:replace": {
         "dist/": ""
