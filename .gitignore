@@ -7,4 +7,4 @@ test/.nyc*
 test/.coverage
 test/live
 **/docs
-.untrack-*
+**/.untrack-*
